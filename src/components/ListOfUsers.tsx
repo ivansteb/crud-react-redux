@@ -11,9 +11,11 @@ import {
   Title,
 } from "@tremor/react";
 import { useAppSelector } from "../hooks/store";
+import { useUserActions } from "../hooks/useUserActions";
 
 export function ListOfUsers() {
   const users = useAppSelector((state) => state.users);
+  const { removeUser } = useUserActions();
 
   return (
     <div className="p-4 md:p-10 mx-auto max-w-7xl">
@@ -69,6 +71,7 @@ export function ListOfUsers() {
                   <div className="flex space-x-2 text-gray-400">
                     <button>
                       <svg
+                        aria-label="Edit element"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -83,8 +86,9 @@ export function ListOfUsers() {
                         />
                       </svg>
                     </button>
-                    <button type="button">
+                    <button onClick={() => removeUser(user.id)} type="button">
                       <svg
+                        aria-label="Delete element"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"

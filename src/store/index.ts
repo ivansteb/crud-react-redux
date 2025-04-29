@@ -2,9 +2,17 @@ import { configureStore } from "@reduxjs/toolkit";
 import usersReducer from "./users/slice";
 // El store será donde almacenaremos el estado de la aplicación
 
+const persistanceLocalStorageMiddleware = (store) => (next) => (action) => {
+  next(action);
+  localStorage.setItem("__redux__state__", JSON.stringify(store.getState()));
+};
+
 export const store = configureStore({
   reducer: {
     users: usersReducer,
+  },
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(persistanceLocalStorageMiddleware);
   },
 });
 
