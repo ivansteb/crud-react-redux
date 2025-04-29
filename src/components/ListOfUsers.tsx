@@ -1,6 +1,6 @@
 // 'use client';
-
 import {
+  Badge,
   Card,
   Table,
   TableBody,
@@ -10,65 +10,23 @@ import {
   TableRow,
   Title,
 } from "@tremor/react";
-
-const users: {
-  id: string;
-  name: string;
-  email: string;
-  github: string;
-}[] = [
-  {
-    id: "1",
-    name: "Ivan Stebler",
-    email: "ivanstebler@emailprovider.com",
-    github: "ivansteb",
-  },
-  {
-    id: "3",
-    name: "Carlos Rodriguez",
-    email: "carlos.rodriguez@emailprovider.com",
-    github: "carlosrodriguez",
-  },
-  {
-    id: "4",
-    name: "Diana Chen",
-    email: "diana.chen@emailprovider.com",
-    github: "dianachen",
-  },
-  {
-    id: "8",
-    name: "Hannah Kim",
-    email: "hannah.kim@emailprovider.com",
-    github: "hannahkim",
-  },
-  {
-    id: "9",
-    name: "Ian Patel",
-    email: "ian.patel@emailprovider.com",
-    github: "ianpatel",
-  },
-  {
-    id: "10",
-    name: "Julia Martinez",
-    email: "julia.martinez@emailprovider.com",
-    github: "juliamartinez",
-  },
-  {
-    id: "11",
-    name: "Kevin Wong",
-    email: "kevin.wong@emailprovider.com",
-    github: "kevinwong",
-  },
-];
+import { useAppSelector } from "../hooks/store";
 
 export function ListOfUsers() {
+  const users = useAppSelector((state) => state.users);
+
   return (
     <div className="p-4 md:p-10 mx-auto max-w-7xl">
-      <Title className="mb-4 text-2xl font-bold text-white">Usuarios</Title>
       <Card className="overflow-hidden border border-gray-200 rounded-lg shadow-xl bg-slate-600 text-white">
+        <Title className="flex mb-4 text-2xl font-bold text-white items-center">
+          Usuarios
+          <Badge className="ml-4 bg-inherit text-slate-200 border border-slate-200">
+            {users.length}
+          </Badge>
+        </Title>
         <Table className="w-full">
           <TableHead className="bg-slate-800">
-            <TableRow className="border-b">
+            <TableRow>
               <TableHeaderCell className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Id
               </TableHeaderCell>
@@ -87,7 +45,7 @@ export function ListOfUsers() {
             {users.map((user) => (
               <TableRow
                 key={user.id}
-                className="hover:bg-slate-700 transition-colors duration-200"
+                className="hover:bg-slate-700/50 transition-colors duration-200 border-none"
               >
                 <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
                   {user.id}
