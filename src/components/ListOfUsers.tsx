@@ -1,5 +1,4 @@
 // 'use client';
-
 import {
   Badge,
   Card,
@@ -11,58 +10,11 @@ import {
   TableRow,
   Title,
 } from "@tremor/react";
-
-const users: {
-  id: string;
-  name: string;
-  email: string;
-  github: string;
-}[] = [
-  {
-    id: "1",
-    name: "Ivan Stebler",
-    email: "ivanstebler@emailprovider.com",
-    github: "ivansteb",
-  },
-  {
-    id: "2",
-    name: "Carlos Rodriguez",
-    email: "carlos.rodriguez@emailprovider.com",
-    github: "carlosrodriguez",
-  },
-  {
-    id: "3",
-    name: "Diana Chen",
-    email: "diana.chen@emailprovider.com",
-    github: "dianachen",
-  },
-  {
-    id: "4",
-    name: "Hannah Kim",
-    email: "hannah.kim@emailprovider.com",
-    github: "hannahkim",
-  },
-  {
-    id: "5",
-    name: "Ian Patel",
-    email: "ian.patel@emailprovider.com",
-    github: "ianpatel",
-  },
-  {
-    id: "6",
-    name: "Julia Martinez",
-    email: "julia.martinez@emailprovider.com",
-    github: "juliamartinez",
-  },
-  {
-    id: "7",
-    name: "Kevin Wong",
-    email: "kevin.wong@emailprovider.com",
-    github: "kevinwong",
-  },
-];
+import { useSelector } from "react-redux";
 
 export function ListOfUsers() {
+  const users = useSelector((state) => state.users);
+
   return (
     <div className="p-4 md:p-10 mx-auto max-w-7xl">
       <Card className="overflow-hidden border border-gray-200 rounded-lg shadow-xl bg-slate-600 text-white">
