@@ -73,6 +73,7 @@ export const usersSlice = createSlice({
   reducers: {
     addNewUser: (state, action: PayloadAction<User>) => {
       const id = crypto.randomUUID();
+      // immer -> permite mutar el estado de forma inmutable
       state.push({ id, ...action.payload });
     },
     deleteUserById: (state, action: PayloadAction<UserId>) => {
