@@ -1,20 +1,31 @@
 import { Button, Card, TextInput, Title } from "@tremor/react";
+import { useState } from "react";
 import { useUserActions } from "../hooks/useUserActions";
 
 export function CreateNewUser() {
   const { addUser } = useUserActions();
+  const [result, setResult] = useState<"ok" | "ko" | null>(null);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const form = event.target;
+    setResult(null);
+
+    const form = event.currentTarget;
     const formData = new FormData(form);
 
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const github = formData.get("github") as string;
 
+    if (!name || !email || !github) {
+      return setResult("ko");
+    }
+
     addUser({ name, email, github });
+    setResult("ok");
+    // Resetear el formulario
+    form.reset();
   };
 
   return (
@@ -22,7 +33,7 @@ export function CreateNewUser() {
       <Card className="overflow-hidden border border-gray-200 rounded-lg shadow-xl text-white">
         <Title>Create New User</Title>
 
-        <form onSubmit={handleSubmit} className="">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <TextInput name="name" placeholder="Enter your name" />
           <TextInput name="email" placeholder="Enter your e-mail" />
           <TextInput name="github" placeholder="Enter your GitHub username" />
@@ -34,6 +45,17 @@ export function CreateNewUser() {
             >
               Create user
             </Button>
+
+            {result === "ok" && (
+              <span className="text-green-700 ml-4">
+                Usuario creado correctamente.
+              </span>
+            )}
+            {result === "ko" && (
+              <span className="text-red-700 ml-4">
+                Error al crear el usuario.
+              </span>
+            )}
           </div>
         </form>
       </Card>
