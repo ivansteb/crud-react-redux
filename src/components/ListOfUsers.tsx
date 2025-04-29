@@ -10,16 +10,12 @@ import {
   TableRow,
   Title,
 } from "@tremor/react";
-import { useAppDispatch, useAppSelector } from "../hooks/store";
-import { deleteUserById, UserId } from "../store/users/slice";
+import { useAppSelector } from "../hooks/store";
+import { useUserActions } from "../hooks/useUserActions";
 
 export function ListOfUsers() {
   const users = useAppSelector((state) => state.users);
-  const dispatch = useAppDispatch();
-
-  const handleDeleteUser = (id: UserId) => {
-    dispatch(deleteUserById(id));
-  };
+  const { removeUser } = useUserActions();
 
   return (
     <div className="p-4 md:p-10 mx-auto max-w-7xl">
@@ -90,10 +86,7 @@ export function ListOfUsers() {
                         />
                       </svg>
                     </button>
-                    <button
-                      onClick={() => handleDeleteUser(user.id)}
-                      type="button"
-                    >
+                    <button onClick={() => removeUser(user.id)} type="button">
                       <svg
                         aria-label="Delete element"
                         xmlns="http://www.w3.org/2000/svg"
