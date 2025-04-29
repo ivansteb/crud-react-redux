@@ -10,10 +10,10 @@ import {
   TableRow,
   Title,
 } from "@tremor/react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../hooks/store";
 
 export function ListOfUsers() {
-  const users = useSelector((state) => state.users);
+  const users = useAppSelector((state) => state.users);
 
   return (
     <div className="p-4 md:p-10 mx-auto max-w-7xl">
