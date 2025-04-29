@@ -1,18 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-export type UserId = string;
-
-export interface User {
-  name: string;
-  email: string;
-  github: string;
-}
-
-export interface UserWithId extends User {
-  id: UserId;
-}
-
-const initialState: UserWithId[] = [
+const DEFAULT_STATE = [
   {
     id: "1",
     name: "Ivan Stebler",
@@ -56,6 +44,28 @@ const initialState: UserWithId[] = [
     github: "kevinwong",
   },
 ];
+
+export type UserId = string;
+
+export interface User {
+  name: string;
+  email: string;
+  github: string;
+}
+
+export interface UserWithId extends User {
+  id: UserId;
+}
+
+// IIFE: Immediately Invoked Function Expression -> Función que se ejecuta inmediatamente
+// Se ejecuta al cargar el módulo y se guarda el estado inicial en la variable initialState
+const initialState: UserWithId[] = (() => {
+  const persistedState = localStorage.getItem("__redux__state__");
+  if (persistedState) {
+    return JSON.parse(persistedState).users;
+  }
+  return DEFAULT_STATE;
+})();
 
 export const usersSlice = createSlice({
   name: "users",
